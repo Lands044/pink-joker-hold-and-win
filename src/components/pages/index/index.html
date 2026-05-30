@@ -1,0 +1,110 @@
+<script type="module" src="@components/pages/index/index.js"></script>
+<link rel="stylesheet" href="@components/pages/index/index.scss">
+
+<main class="page">
+	<div class="page__container">
+
+		<div class="game">
+			<!-- Main area: sidebar left + drum + sidebar right -->
+			<div class="game__main">
+				<!-- Left sidebar -->
+				<div class="game__sidebar game__sidebar--left">
+					<div class="game__logo">
+						<img src="@img/logo.webp" alt="Coin Volcano" fetchpriority="high">
+					</div>
+					<a href="#" class="buy-bonus">
+						<span class="buy-bonus__label">BUY BONUS</span>
+						<span class="buy-bonus__value">30.00</span>
+					</a>
+				</div>
+
+				<!-- Drum + Jackpots above it -->
+				<div class="game__field">
+					<!-- Jackpots top row — same width as drum -->
+					<div class="jackpots" id="jackpots">
+						<div class="jackpot jackpot--grand">
+							<span class="jackpot__label">GRAND</span>
+							<span class="jackpot__value">500.00</span>
+						</div>
+						<div class="jackpot jackpot--major">
+							<span class="jackpot__label">MAJOR</span>
+							<span class="jackpot__value">50.00</span>
+						</div>
+						<div class="jackpot jackpot--minor">
+							<span class="jackpot__label">MINOR</span>
+							<span class="jackpot__value">20.00</span>
+						</div>
+						<div class="jackpot jackpot--mini">
+							<span class="jackpot__label">MINI</span>
+							<span class="jackpot__value">10.00</span>
+						</div>
+					</div>
+					<div class="drum">
+						<!-- Center win-line highlight overlay -->
+						<div class="drum__payline"></div>
+						<div class="drum__spinner">
+							<div class="drum__column">
+								<div class="drum__image"><img src="@img/icon/icon-1.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-2.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-3.webp" alt="Icon game"></div>
+							</div>
+							<div class="drum__column">
+								<div class="drum__image"><img src="@img/icon/icon-5.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-6.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-7.webp" alt="Icon game"></div>
+							</div>
+							<div class="drum__column">
+								<div class="drum__image"><img src="@img/icon/icon-1.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-2.webp" alt="Icon game"></div>
+								<div class="drum__image"><img src="@img/icon/icon-3.webp" alt="Icon game"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right sidebar -->
+				<div class="game__sidebar game__sidebar--right">
+					<a href="#" class="side-btn side-btn--sound menu__sound">
+						<span class="side-btn__icon side-btn__icon--sound"></span>
+					</a>
+					<a href="#" class="side-btn side-btn--turbo menu__button-spin">
+						<span class="side-btn__icon side-btn__icon--turbo"></span>
+						<span class="side-btn__label">Hold for<br>Turbo Spin</span>
+					</a>
+					<a href="#" class="side-btn side-btn--auto menu__button-auto">
+						<span class="side-btn__icon side-btn__icon--auto"></span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Bottom info bar -->
+			<div class="menu">
+				<div class="menu__info-block">
+					<span class="menu__info-label">Win</span>
+					<span class="menu__info-value menu__info-win"><span class="number">0.00</span></span>
+				</div>
+				<div class="menu__info-block menu__info-block--center">
+					<span class="menu__info-label">Balance</span>
+					<span class="menu__info-value menu__info"><span class="number">1000.00</span></span>
+				</div>
+				<div class="menu__info-block">
+					<span class="menu__info-label">Bet</span>
+					<span class="menu__info-value menu__bet-value"><span class="number">1.00n</span></span>
+				</div>
+				<!-- Hidden element needed by JS for showCTA -->
+				<div class="menu__bottom hidden"></div>
+			</div>
+		</div>
+
+		<div class="popup">
+			<div class="popup__overlay"></div>
+			<div class="popup__content">
+				<div class="popup__inner">
+					<h2 class="popup__title">Congratulations!</h2>
+					<p class="popup__text">Ready to continue playing?</p>
+					<a class="cta-button" href="#">Download Now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
