@@ -148,8 +148,9 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	transform: translateX(-50%);
 	z-index: 50;
 
-	@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
-		max-width: vw(120);
+	@media (max-width: toEm($mobile)) {
+		max-width: vw(300);
+		bottom: 0;
 	}
 
 	img {
