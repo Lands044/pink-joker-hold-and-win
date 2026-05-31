@@ -580,7 +580,7 @@ class SlotMachine {
 
 			// Визначаємо видимі іконки на основі поточної позиції strip
 			const transform = strip.style.transform;
-			const match = transform.match(/translateY\(-?(\d+)px\)/);
+			const match = transform.match(/translateY\(-?([\d.]+)px\)/);
 			const currentOffset = match ? parseInt(match[1]) : 0;
 			const visibleStartIndex = Math.round(currentOffset / iconHeight);
 
@@ -869,7 +869,7 @@ class SlotMachine {
 
 			// Визначаємо видимі іконки на основі поточної позиції strip
 			const transform = strip.style.transform;
-			const match = transform.match(/translateY\(-?(\d+)px\)/);
+			const match = transform.match(/translateY\(-?([\d.]+)px\)/);
 			const currentOffset = match ? parseInt(match[1]) : 0;
 			const visibleStartIndex = Math.round(currentOffset / iconHeight);
 
