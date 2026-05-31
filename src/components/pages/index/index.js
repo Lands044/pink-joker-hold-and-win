@@ -55,7 +55,7 @@ class SlotMachine {
 				minWidth: 0,
 				cols: 3,
 				rows: 3,
-				getIconHeight: () => 90
+				getIconHeight: () => 100
 			}
 		};
 

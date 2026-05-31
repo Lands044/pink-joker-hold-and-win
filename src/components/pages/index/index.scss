@@ -204,12 +204,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		paint-order: stroke fill;
 
 		@media (max-width: toEm($mobile)) {
-			font-size: 9px;
-			padding: 2px 8px;
-			border-width: 1px;
-			border-radius: 20px;
-			letter-spacing: 0;
-			-webkit-text-stroke: 0.8px #ffd700;
+			font-size: 12px;
+			-webkit-text-stroke: 1.5px #ffd700;
 		}
 	}
 
@@ -435,7 +431,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.65);
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 
 	@media (max-width: toEm($mobile)) {
@@ -474,7 +470,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		height: vw(465);
 
 		@media (max-width: toEm($mobile)) {
-			height: calc(90px * 3);
+			height: calc(100px * 3);
 			border-width: 1px;
 			border-radius: 4px;
 		}
@@ -510,8 +506,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 
 		@media (max-width: toEm($mobile)) {
-			height: 90px;
-			padding: 8px;
+			height: 100px;
+			padding: 0;
 		}
 
 		img {
@@ -783,7 +779,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	}
 
 	&__inner {
-		background: linear-gradient(135deg, #3a1a6e 0%, #5a2d91 100%);
+		background: linear-gradient(135deg, #9a1875 0%, #ff37e4 100%);
 		border: vw(4) solid #ffd700;
 		border-radius: vw(30);
 		padding: vw(50) vw(60);
