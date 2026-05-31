@@ -28,7 +28,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: center;
 		justify-content: center;
 		flex: 1;
-		padding: 30px 0;
+		padding: 80px 0 30px;
 
 		@media (max-width:toEm($mobile)){
 			padding: 0 15px;
@@ -481,10 +481,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		z-index: 10;
 		border: vw(2) solid rgba(255, 185, 33, 0.3);
 		border-radius: vw(6);
-		height: vw(540);
+		height: vw(465);
 
 		@media (max-width: toEm($mobile)) {
-			height: calc(120px * 3);
+			height: calc(90px * 3);
 			border-width: 1px;
 			border-radius: 4px;
 		}
@@ -507,7 +507,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		height: vw(180);
+		height: vw(155);
 		flex-shrink: 0;
 		padding: vw(8);
 		position: relative;
@@ -520,7 +520,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 
 		@media (max-width: toEm($mobile)) {
-			height: 120px;
+			height: 90px;
 			padding: 8px;
 		}
 

@@ -48,14 +48,14 @@ class SlotMachine {
 				minWidth: 767.98,
 				cols: 3,
 				rows: 3,
-				// Масштабування тільки для екранів > 1440px, інакше фіксовано 180px
-				getIconHeight: () => Math.max(180, (180 / 1440) * window.innerWidth)
+				// Масштабування тільки для екранів > 1440px, інакше фіксовано 155px
+				getIconHeight: () => Math.max(155, (155 / 1440) * window.innerWidth)
 			},
 			mobile: {
 				minWidth: 0,
 				cols: 3,
 				rows: 3,
-				getIconHeight: () => 120
+				getIconHeight: () => 90
 			}
 		};
 
