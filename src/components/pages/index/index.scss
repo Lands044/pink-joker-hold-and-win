@@ -28,7 +28,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: center;
 		justify-content: center;
 		flex: 1;
-		padding: 80px 0 30px;
+		padding: 60px 0 20px;
 
 		@media (max-width:toEm($mobile)){
 			padding: 0 15px;
@@ -129,7 +129,9 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 	&__wrap {
 		max-width: 100%;
-		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
 	}
 }
 
@@ -138,7 +140,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	align-items: center;
 	justify-content: center;
 	position: absolute;
-	bottom: 0;
+	bottom: -5%;
 	left: 50%;
 	max-width: 460px;
 	width: 100%;
@@ -184,25 +186,21 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// Oval label tab on top
 	&__label {
 		position: absolute;
-		top: -50%;
-		transform: translateY(5%);
+		top: -55%;
 		z-index: 2;
 		margin-top: vw(-2);
-		padding: vw(1.5) vw(16);
 		max-width: 106px;
 		width: 100%;
 		text-align: center;
-		border-radius: 45%;
-		border: vw(2) solid #d4a017;
-		font-size: vw(20);
+		font-size: vw(24);
 		font-weight: 900;
 		text-transform: uppercase;
 		letter-spacing: vw(1);
 		line-height: 1.3;
 		white-space: nowrap;
-		background: linear-gradient(180deg, #ffe066 0%, #f5a623 50%, #c47a00 100%);
 		color: inherit;
-		box-shadow: 0 vw(2) vw(6) rgba(0, 0, 0, 0.4);
+		-webkit-text-stroke: vw(3) #ffd700;
+		paint-order: stroke fill;
 
 		@media (max-width: toEm($mobile)) {
 			font-size: 9px;
@@ -210,6 +208,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			border-width: 1px;
 			border-radius: 20px;
 			letter-spacing: 0;
+			-webkit-text-stroke: 0.8px #ffd700;
 		}
 	}
 
@@ -217,10 +216,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	&__value {
 		width: 100%;
 		text-align: center;
-		font-size: vw(26);
+		font-size: vw(32);
 		font-weight: 900;
 		line-height: 1;
-		padding: vw(12) vw(6) vw(6);
+		padding: vw(8);
 
 		@media (max-width: toEm($mobile)) {
 			font-size: 14px;
