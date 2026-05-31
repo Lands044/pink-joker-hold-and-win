@@ -31,7 +31,7 @@ class SlotMachine {
 		this.isSoundEnabled = true;
 
 		// Тип анімації виграшу: 'line' (виграшна лінія) або 'border' (анімована обводка)
-		this.winAnimationType = 'border';
+		this.winAnimationType = 'line';
 
 		// Фінансові значення
 		this.balance = 1000.00;
