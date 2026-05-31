@@ -281,7 +281,7 @@ class SlotMachine {
 				const iconNum = ((i + randomOffset) % this.icons) + 1;
 				const icon = document.createElement('div');
 				icon.className = 'drum__image';
-				icon.innerHTML = `<img src="${this.baseUrl}assets/img/icon/icon-${iconNum}.webp" alt="Icon ${iconNum}">`;
+				icon.innerHTML = `<img src="${this.baseUrl}assets/img/icon/icon-${iconNum}.png" alt="Icon ${iconNum}">`;
 				strip.appendChild(icon);
 			}
 
@@ -293,7 +293,7 @@ class SlotMachine {
 					columnIcons.forEach((iconNum) => {
 						const icon = document.createElement('div');
 						icon.className = 'drum__image';
-						icon.innerHTML = `<img src="${this.baseUrl}assets/img/icon/icon-${iconNum}.webp" alt="Icon ${iconNum}">`;
+						icon.innerHTML = `<img src="${this.baseUrl}assets/img/icon/icon-${iconNum}.png" alt="Icon ${iconNum}">`;
 						strip.appendChild(icon);
 					});
 				}
@@ -501,7 +501,7 @@ class SlotMachine {
 	// Отримує номер іконки з src
 	getIconNumber(img) {
 		const src = img.getAttribute('src');
-		const match = src.match(/icon-(\d+)\.webp/);
+		const match = src.match(/icon-(\d+)\.png/);
 		return match ? parseInt(match[1]) : 1;
 	}
 
