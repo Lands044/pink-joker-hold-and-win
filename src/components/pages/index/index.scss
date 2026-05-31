@@ -99,21 +99,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 	}
 
-	&__logo {
-		width: 100%;
-		max-width: vw(180);
-
-		@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
-			max-width: vw(120);
-		}
-
-		img {
-			width: 100%;
-			height: auto;
-			display: block;
-		}
-	}
-
 	&__field {
 		display: flex;
 		flex-direction: column;
@@ -129,20 +114,47 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 // ─────────────────────────────────────────
 .jackpots {
 	display: flex;
-	align-items: flex-end;
-	gap: vw(6);
-	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	row-gap: vw(10);
 	max-width: 800px;
+	width: 100%;
 	padding: 0 vw(6) 0;
+	position: relative;
 
 	@media (max-width: toEm($mobile)) {
 		gap: 3px;
 		padding: 0 3px 0;
 	}
 
-	// @media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
-	// 	display: none;
-	// }
+	&__wrap {
+		max-width: 100%;
+		width: 100%;
+	}
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	max-width: 460px;
+	width: 100%;
+	height: 100%;
+	transform: translateX(-50%);
+	z-index: 50;
+
+	@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
+		max-width: vw(120);
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
 }
 
 .jackpot {
@@ -151,6 +163,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	flex-direction: column;
 	align-items: center;
 	min-width: 0;
+	max-width: 220px;
+	width: 100%;
 	position: relative;
 	// Gold outer border around entire card
 	border: vw(3) solid #d4a017;
@@ -160,6 +174,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		inset 0 0 vw(4) rgba(255, 215, 100, 0.3);
 	overflow: visible;
 	position: relative;
+	z-index: 100;
 
 	@media (max-width: toEm($mobile)) {
 		border-width: 2px;
@@ -216,6 +231,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// GRAND — golden/orange body
 	&--grand {
 		background: linear-gradient(180deg, #e8a000 0%, #ffcd36 60%, #ffad14 100%);
+		justify-self: flex-start;
 
 		.jackpot__label {
 			color: #8b1a00;
@@ -229,6 +245,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// MAJOR — magenta/pink body
 	&--major {
 		background: linear-gradient(180deg, #d0006e 0%, #a0005a 60%, #700040 100%);
+		justify-self: flex-start;
 
 		.jackpot__label {
 			color: #6b003a;
@@ -242,6 +259,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// MINOR — blue body
 	&--minor {
 		background: linear-gradient(180deg, #1a5ec8 0%, #1040a0 60%, #0a2878 100%);
+		justify-self: flex-end;
 
 		.jackpot__label {
 			color: #00247a;
@@ -255,6 +273,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// MINI — green body
 	&--mini {
 		background: linear-gradient(180deg, #2a8a00 0%, #1a6a00 60%, #0e4800 100%);
+		justify-self: flex-end;
 
 		.jackpot__label {
 			color: #0e4800;
@@ -262,75 +281,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		.jackpot__value {
 			color: #fff;
 			text-shadow: 0 vw(1) vw(4) rgba(0, 0, 0, 0.6);
-		}
-	}
-}
-
-// ─────────────────────────────────────────
-// Buy Bonus button
-// ─────────────────────────────────────────
-.buy-bonus {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: linear-gradient(135deg, #1a6b1a 0%, #28a428 50%, #1a6b1a 100%);
-	border: vw(2) solid #6ddc00;
-	border-radius: vw(8);
-	padding: vw(10) vw(16);
-	cursor: pointer;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
-	box-shadow: 0 0 vw(12) rgba(109, 220, 0, 0.4);
-	text-decoration: none;
-	width: 100%;
-	max-width: vw(160);
-	text-align: center;
-	gap: 5px;
-
-	@media (max-width: toEm($mobile)) {
-		display: none;
-	}
-
-	&:hover:not(&--used) {
-		transform: scale(1.03);
-		box-shadow: 0 0 vw(20) rgba(109, 220, 0, 0.6);
-	}
-
-	&--used {
-		background: linear-gradient(135deg, #3a3a3a 0%, #555 50%, #3a3a3a 100%);
-		border-color: #666;
-		box-shadow: none;
-		cursor: not-allowed;
-		pointer-events: none;
-		opacity: 0.6;
-	}
-
-	&--spinning {
-		pointer-events: none;
-		opacity: 0.5;
-	}
-
-	&__label {
-		font-size: vw(13);
-		font-weight: 700;
-		color: #fff;
-		text-transform: uppercase;
-		letter-spacing: vw(1);
-		line-height: 1.2;
-
-		@media (max-width: toEm($mobile)) {
-			font-size: 8px;
-			letter-spacing: 0;
-		}
-	}
-
-	&__value {
-		font-size: vw(20);
-		font-weight: 900;
-		color: #fff;
-
-		@media (max-width: toEm($mobile)) {
-			font-size: 12px;
 		}
 	}
 }
