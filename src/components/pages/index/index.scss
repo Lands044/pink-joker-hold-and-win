@@ -64,7 +64,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		@media (max-width: toEm($mobile)) {
 			display: flex;
 			flex-direction: column;
-			gap: 15px;
+			gap: 5px;
 		}
 
 		@media (max-height:toEm(720)) {
@@ -87,6 +87,13 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		@media (max-width: toEm($mobile)) {
 			align-items: center;
 			flex-direction: row;
+			
+		}
+
+		&--left {
+			@media (max-width: toEm($mobile)) {
+				order: 1;
+			}
 		}
 
 		&--right {
@@ -95,6 +102,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 			@media (max-width: toEm($mobile)) {
 				padding: 10px 6px;
+				order: 4;
 			}
 		}
 	}
@@ -106,6 +114,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		justify-content: center;
 		padding: 0;
 		gap: 0;
+
+		@media (max-width:toEm($mobile)){
+			order: 2;
+		}
 	}
 }
 
@@ -149,8 +161,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	z-index: 50;
 
 	@media (max-width: toEm($mobile)) {
-		max-width: vw(300);
-		bottom: 0;
+		max-width: vw(260);
+		bottom: -10%;
 	}
 
 	img {
@@ -373,8 +385,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			inset 0 vw(3) vw(6) rgba(255, 200, 100, 0.3);
 
 		@media (max-width: toEm($mobile)) {
-			width: 72px;
-			height: 72px;
+			width: 64px;
+			height: 64px;
 			border-width: 3px;
 		}
 
@@ -390,8 +402,9 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			height: vw(110);
 
 			@media (max-width: toEm($mobile)) {
-				width: 48px;
-				height: 48px;
+				margin-top: 2.5px;
+				width: 42px;
+				height: 42px;
 			}
 		}
 	}
@@ -557,7 +570,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	color: #fff;
 
 	@media (max-width: toEm($mobile)) {
-		padding: 8px 12px;
+		padding: 0 8px 8px;
 		margin-top: 0;
 		gap: 12px;
 	}
@@ -568,6 +581,14 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: flex-start;
 		gap: 0;
 		flex-shrink: 0;
+
+		@media (max-width:toEm($mobile)){
+
+			&.last-win {
+				order: 3;
+				align-items: center;
+			}
+		}
 	}
 
 	&__info-label {
@@ -610,10 +631,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 		@media (max-width: toEm($mobile)) {
 			border-radius: 30px;
-			padding: 5px 8px;
+			padding: 0 8px;
 			gap: 6px;
-			max-width: none;
-			flex: 1;
+			order: 4;
+			align-self: center;
 		}
 	}
 
