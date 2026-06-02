@@ -216,14 +216,14 @@ class SlotMachine {
 		if (this.increaseButton) {
 			this.increaseButton.addEventListener('click', (e) => {
 				e.preventDefault();
-				this.decreaseBet();
+				this.increaseBet();
 			});
 		}
 
 		if (this.reduceButton) {
 			this.reduceButton.addEventListener('click', (e) => {
 				e.preventDefault();
-				this.increaseBet();
+				this.decreaseBet();
 			});
 		}
 

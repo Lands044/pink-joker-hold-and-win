@@ -67,9 +67,9 @@
 
 				<!-- Right sidebar -->
 				<div class="game__sidebar game__sidebar--right">
-					<a href="#" class="side-btn side-btn--sound menu__sound">
+					<!-- <a href="#" class="side-btn side-btn--sound menu__sound">
 						<span class="side-btn__icon side-btn__icon--sound"></span>
-					</a>
+					</a> -->
 					<a href="#" class="side-btn side-btn--turbo menu__button-spin">
 						<span class="side-btn__icon side-btn__icon--turbo"></span>
 					</a>
@@ -82,17 +82,24 @@
 			<!-- Bottom info bar -->
 			<div class="menu">
 				<div class="menu__info-block">
-					<span class="menu__info-label">Win</span>
-					<span class="menu__info-value menu__info-win"><span class="number">0.00</span></span>
-				</div>
-				<div class="menu__info-block menu__info-block--center">
-					<span class="menu__info-label">Balance</span>
+					<span class="menu__info-label">CREDIT</span>
 					<span class="menu__info-value menu__info"><span class="number">1000.00</span></span>
 				</div>
 				<div class="menu__info-block">
-					<span class="menu__info-label">Bet</span>
-					<span class="menu__info-value menu__bet-value"><span class="number">1.00n</span></span>
+					<span class="menu__info-label">LAST WIN</span>
+					<span class="menu__info-value menu__info-win"><span class="number">0.00</span></span>
 				</div>
+				<div class="menu__bet-control">
+					<button class="menu__bet-arrow menu__button-arrow reduce" aria-label="Decrease bet">−</button>
+					<div class="menu__bet-center">
+						<span class="menu__info-label">BET</span>
+						<span class="menu__info-value menu__bet-value"><span class="number">1.00</span></span>
+					</div>
+					<button class="menu__bet-arrow menu__button-arrow increase" aria-label="Increase bet">+</button>
+				</div>
+				<a href="#" class="menu__sound-btn menu__sound side-btn side-btn--sound">
+					<span class="side-btn__icon side-btn__icon--sound"></span>
+				</a>
 				<!-- Hidden element needed by JS for showCTA -->
 				<div class="menu__bottom hidden"></div>
 			</div>
