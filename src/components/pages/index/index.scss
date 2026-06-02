@@ -658,6 +658,19 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 	}
 
+	// Sound + action buttons group (right side of menu)
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: vw(8);
+		margin-left: auto;
+		flex-shrink: 0;
+
+		@media (max-width: toEm($mobile)) {
+			gap: 6px;
+		}
+	}
+
 	// Sound button inside the menu bar
 	&__sound-btn {
 		flex-shrink: 0;
@@ -665,7 +678,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		height: vw(48);
 		border-radius: 50%;
 		background: rgba(30, 20, 50, 0.7);
-		border: vw(2) solid rgba(255, 255, 255, 0.45);
+		border: none;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -673,16 +686,13 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		text-decoration: none;
 		color: #fff;
 		transition: all 0.2s ease;
-		margin-left: auto;
 
 		@media (max-width: toEm($mobile)) {
 			width: 36px;
 			height: 36px;
-			border-width: 1.5px;
 		}
 
 		&:hover {
-			border-color: rgba(255, 255, 255, 0.8);
 			transform: scale(1.08);
 		}
 
@@ -698,6 +708,49 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 				width: 20px;
 				height: 20px;
 			}
+		}
+	}
+
+	// Disabled visual-only action buttons (Info, Hamburger)
+	&__action-btn {
+		flex-shrink: 0;
+		width: vw(48);
+		height: vw(48);
+		border-radius: 50%;
+		background: transparent;
+		border: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: default;
+		opacity: 0.75;
+		padding: 0;
+
+		@media (max-width: toEm($mobile)) {
+			width: 36px;
+			height: 36px;
+		}
+	}
+
+	&__action-icon {
+		display: block;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		width: vw(36);
+		height: vw(36);
+
+		@media (max-width: toEm($mobile)) {
+			width: 26px;
+			height: 26px;
+		}
+
+		&--info {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' stroke='white' stroke-width='2'/%3E%3Cpath d='M12 11v5' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='7.5' r='1' fill='white'/%3E%3C/svg%3E");
+		}
+
+		&--hamburger {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z'/%3E%3C/svg%3E");
 		}
 	}
 
