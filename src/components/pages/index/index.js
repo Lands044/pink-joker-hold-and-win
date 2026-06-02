@@ -1295,4 +1295,174 @@ class SlotMachine {
 // Ініціалізація при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
 	new SlotMachine();
+	initBackgroundLightning();
 });
+
+function initBackgroundLightning() {
+	const page = document.querySelector('.page');
+	if (!page) return;
+
+	const canvas = document.createElement('canvas');
+	canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;';
+	page.style.position = 'relative';
+	page.prepend(canvas);
+
+	const ctx = canvas.getContext('2d');
+	const bolts = [];
+
+	function resize() {
+		canvas.width  = page.offsetWidth;
+		canvas.height = page.offsetHeight;
+	}
+	resize();
+	window.addEventListener('resize', resize);
+
+	// Catmull-Rom smooth path
+	function drawSmooth(pts) {
+		if (pts.length < 2) return;
+		ctx.beginPath();
+		ctx.moveTo(pts[0].x, pts[0].y);
+		for (let i = 0; i < pts.length - 1; i++) {
+			const p0 = pts[i - 1] || pts[i];
+			const p1 = pts[i];
+			const p2 = pts[i + 1];
+			const p3 = pts[i + 2] || p2;
+			const cp1x = p1.x + (p2.x - p0.x) / 6;
+			const cp1y = p1.y + (p2.y - p0.y) / 6;
+			const cp2x = p2.x - (p3.x - p1.x) / 6;
+			const cp2y = p2.y - (p3.y - p1.y) / 6;
+			ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+		}
+		ctx.stroke();
+	}
+
+	// Build bolt from origin toward a target (center zone), with zigzag deviation
+	function makeBolt(ox, oy, tx, ty) {
+		const pts = [{ x: ox, y: oy }];
+		const segments = 5 + Math.floor(Math.random() * 4);
+		for (let i = 1; i <= segments; i++) {
+			const t = i / segments;
+			// Lerp toward target + perpendicular random offset that shrinks near end
+			const lx = ox + (tx - ox) * t;
+			const ly = oy + (ty - oy) * t;
+			const spread = (1 - t) * 80;
+			pts.push({
+				x: lx + (Math.random() - 0.5) * spread,
+				y: ly + (Math.random() - 0.5) * spread * 0.5
+			});
+		}
+		return pts;
+	}
+
+	function spawnBolt() {
+		const w = canvas.width;
+		const h = canvas.height;
+
+		// Target: random point near center with some spread
+		const tx = w * 0.3 + Math.random() * w * 0.4;
+		const ty = h * 0.25 + Math.random() * h * 0.5;
+
+		// Origin: edge of screen (top, left, or right)
+		let ox, oy;
+		const side = Math.floor(Math.random() * 3); // 0=top, 1=left, 2=right
+		if (side === 0) {
+			ox = w * 0.1 + Math.random() * w * 0.8;
+			oy = 0;
+		} else if (side === 1) {
+			ox = 0;
+			oy = h * 0.05 + Math.random() * h * 0.5;
+		} else {
+			ox = w;
+			oy = h * 0.05 + Math.random() * h * 0.5;
+		}
+
+		const pts = makeBolt(ox, oy, tx, ty);
+
+		// Optional single branch from mid-point
+		let branch = null;
+		if (Math.random() > 0.5) {
+			const midIdx = Math.floor(pts.length * (0.3 + Math.random() * 0.3));
+			const mp = pts[midIdx];
+			const btx = mp.x + (Math.random() - 0.5) * 120;
+			const bty = mp.y + 60 + Math.random() * 100;
+			branch = makeBolt(mp.x, mp.y, btx, bty);
+		}
+
+		bolts.push({
+			pts,
+			branch,
+			alpha:    0,
+			phase:    'in',
+			fadeIn:   0.022 + Math.random() * 0.018,
+			holdFor:  3 + Math.floor(Math.random() * 5),
+			holdLeft: 0,
+			decay:    0.005 + Math.random() * 0.005,
+			width:    1.5 + Math.random() * 2
+		});
+	}
+
+	function drawBolt(pts, alpha, width) {
+		if (pts.length < 2) return;
+		ctx.save();
+		ctx.globalAlpha = alpha;
+		ctx.lineCap = 'round';
+		ctx.lineJoin = 'round';
+
+		// Outer glow — soft pink-white
+		ctx.shadowColor = 'rgba(255,210,230,0.7)';
+		ctx.shadowBlur  = 30;
+		ctx.strokeStyle = 'rgba(255,215,230,0.3)';
+		ctx.lineWidth   = width * 4.5;
+		drawSmooth(pts);
+
+		// Mid layer
+		ctx.shadowBlur  = 12;
+		ctx.strokeStyle = 'rgba(255,235,242,0.65)';
+		ctx.lineWidth   = width * 1.6;
+		drawSmooth(pts);
+
+		// White core
+		ctx.shadowBlur  = 4;
+		ctx.shadowColor = '#fff';
+		ctx.strokeStyle = 'rgba(255,255,255,0.92)';
+		ctx.lineWidth   = width * 0.4;
+		drawSmooth(pts);
+
+		ctx.restore();
+	}
+
+	// Max 2 bolts alive at once to avoid clutter
+	const MAX_BOLTS = 2;
+	let nextSpawn = 0;
+
+	function loop(ts) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		if (ts > nextSpawn && bolts.length < MAX_BOLTS) {
+			spawnBolt();
+			nextSpawn = ts + 600 + Math.random() * 1400;
+		}
+
+		for (let i = bolts.length - 1; i >= 0; i--) {
+			const b = bolts[i];
+
+			if (b.phase === 'in') {
+				b.alpha += b.fadeIn;
+				if (b.alpha >= 1) { b.alpha = 1; b.phase = 'hold'; b.holdLeft = b.holdFor; }
+			} else if (b.phase === 'hold') {
+				if (--b.holdLeft <= 0) b.phase = 'out';
+			} else {
+				b.alpha -= b.decay;
+			}
+
+			drawBolt(b.pts, b.alpha, b.width);
+			if (b.branch) drawBolt(b.branch, b.alpha * 0.55, b.width * 0.55);
+
+			if (b.alpha <= 0) bolts.splice(i, 1);
+		}
+
+		requestAnimationFrame(loop);
+	}
+
+	requestAnimationFrame(loop);
+}
