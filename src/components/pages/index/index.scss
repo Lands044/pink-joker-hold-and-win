@@ -415,7 +415,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	// Fast (double-chevron) button — bottom small button
 	&--fast {
 		.side-btn__icon--fast {
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z'/%3E%3C/svg%3E");
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='22' fill='white'/%3E%3Cpath fill='%23111' d='M13 14l10 10-10 10zM25 14l10 10-10 10z'/%3E%3C/svg%3E");
 		}
 	}
 
