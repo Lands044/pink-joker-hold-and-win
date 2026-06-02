@@ -13,9 +13,13 @@ class SlotMachine {
 		// Кнопки
 		this.spinButton = document.querySelector('.menu__button-spin');
 		this.autoButton = document.querySelector('.menu__button-auto');
+		this.autoplayButton = document.querySelector('.menu__button-autoplay');
 		this.soundButton = document.querySelector('.menu__sound');
 		this.increaseButton = document.querySelector('.menu__button-arrow.increase');
 		this.reduceButton = document.querySelector('.menu__button-arrow.reduce');
+
+		// Стан автопрокруту
+		this.isAutoplaying = false;
 
 		// Кнопки ставок
 		this.betButtons = document.querySelectorAll('.menu__bet-btn');
@@ -206,6 +210,14 @@ class SlotMachine {
 			this.handleSpin();
 		});
 
+		// Обробник кнопки автопрокруту
+		if (this.autoplayButton) {
+			this.autoplayButton.addEventListener('click', (e) => {
+				e.preventDefault();
+				this.handleAutoplay();
+			});
+		}
+
 		// Обробник кнопки звуку
 		this.soundButton.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -386,9 +398,6 @@ class SlotMachine {
 		// Запускаємо анімацію обертання
 		await this.spin(currentResult);
 
-		// Показуємо результат
-		this.showResult(currentResult);
-
 		// Додаємо виграш до Win
 		if (currentResult.winAmount > 0) {
 			this.win = (this.win || 0) + currentResult.winAmount;
@@ -396,12 +405,19 @@ class SlotMachine {
 		}
 
 		this.spinCount++;
-		this.isSpinning = false;
 
-		if (this.spinCount >= results.length) {
+		const isLastSpin = this.spinCount >= results.length;
+
+		if (isLastSpin) {
+			// Останній спін — не чекаємо анімацію, одразу показуємо CTA
+			this.showResult(currentResult);
+			this.isSpinning = false;
 			this.showCTA();
+		} else {
+			// Чекаємо завершення анімації виграшу перед наступним спіном
+			await this.showResult(currentResult);
+			this.isSpinning = false;
 		}
-		// Кнопки розблоковуються після завершення анімації виграшу в showResult
 	}
 
 	// Анімація обертання всіх колонок
@@ -501,43 +517,45 @@ class SlotMachine {
 		return match ? parseInt(match[1]) : 1;
 	}
 
-	// Показ результату
+	// Показ результату — повертає Promise що резолвиться після завершення анімації
 	showResult(result) {
-		if (result.type === 'bigwin') {
-			this.playSound('win');
-			this.drumSpinner.classList.add('bigwin-animation');
-			this.createWinEffects();
+		return new Promise((resolve) => {
+			if (result.type === 'bigwin') {
+				this.playSound('win');
+				this.drumSpinner.classList.add('bigwin-animation');
+				this.createWinEffects();
 
-			// Малюємо анімацію виграшу
-			if (result.winLine) {
-				this.drawWinAnimation(result.winLine);
-			}
+				if (result.winLine) {
+					this.drawWinAnimation(result.winLine);
+				}
 
-			setTimeout(() => {
-				this.drumSpinner.classList.remove('bigwin-animation');
-				this.removeWinAnimation();
+				setTimeout(() => {
+					this.drumSpinner.classList.remove('bigwin-animation');
+					this.removeWinAnimation();
+					this.enableSpinButtons();
+					resolve();
+				}, 2000);
+
+			} else if (result.type === 'smallwin') {
+				this.playSound('win');
+				this.drumSpinner.classList.add('smallwin-animation');
+
+				if (result.winLine) {
+					this.drawWinAnimation(result.winLine);
+				}
+
+				setTimeout(() => {
+					this.drumSpinner.classList.remove('smallwin-animation');
+					this.removeWinAnimation();
+					this.enableSpinButtons();
+					resolve();
+				}, 1500);
+
+			} else {
 				this.enableSpinButtons();
-			}, 2000);
-
-		} else if (result.type === 'smallwin') {
-			this.playSound('win');
-			this.drumSpinner.classList.add('smallwin-animation');
-
-			// Малюємо анімацію виграшу
-			if (result.winLine) {
-				this.drawWinAnimation(result.winLine);
+				resolve();
 			}
-
-			setTimeout(() => {
-				this.drumSpinner.classList.remove('smallwin-animation');
-				this.removeWinAnimation();
-				this.enableSpinButtons();
-			}, 1500);
-
-		} else {
-			// Програш - одразу розблоковуємо кнопки
-			this.enableSpinButtons();
-		}
+		});
 	}
 
 	// Малює анімацію виграшу в залежності від типу
@@ -1043,11 +1061,32 @@ class SlotMachine {
 		const results = this.getResultsForCurrentBreakpoint();
 		if (this.spinCount >= results.length) return;
 
+		// Не розблоковуємо під час автопрокруту
+		if (this.isAutoplaying) return;
+
 		this.spinButton.classList.remove('disabled');
 		this.autoButton.classList.remove('disabled');
 		// Розблоковуємо buy bonus після спіну
 		const buyBtn = document.querySelector('.buy-bonus:not(.buy-bonus--used)');
 		if (buyBtn) buyBtn.classList.remove('buy-bonus--spinning');
+	}
+
+	// Запускає всі спіни підряд, чекаючи кожен включно з анімацією виграшу
+	async handleAutoplay() {
+		if (this.isSpinning || this.isAutoplaying) return;
+
+		const results = this.getResultsForCurrentBreakpoint();
+		if (this.spinCount >= results.length) return;
+
+		this.isAutoplaying = true;
+		if (this.autoplayButton) this.autoplayButton.classList.add('active', 'disabled');
+
+		while (this.spinCount < results.length) {
+			await this.handleSpin();
+		}
+
+		this.isAutoplaying = false;
+		if (this.autoplayButton) this.autoplayButton.classList.remove('active', 'disabled');
 	}
 
 	// Отримує значення ставок з кнопок

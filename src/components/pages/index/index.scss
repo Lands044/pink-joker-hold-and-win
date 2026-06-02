@@ -396,6 +396,29 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 	}
 
+	// Autoplay button — "A" with circle arrows, same size as small buttons
+	&--autoplay {
+		.side-btn__icon--autoplay {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z'/%3E%3C/svg%3E");
+		}
+
+		&.active {
+			border-color: $gold;
+			box-shadow: 0 0 vw(16) rgba(255, 185, 33, 0.6);
+
+			.side-btn__icon--autoplay {
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffb921' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z'/%3E%3C/svg%3E");
+			}
+		}
+	}
+
+	// Fast (double-chevron) button — bottom small button
+	&--fast {
+		.side-btn__icon--fast {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z'/%3E%3C/svg%3E");
+		}
+	}
+
 	// Sound off state
 	&.sound-off .side-btn__icon--sound,
 	&.menu__sound.sound-off .side-btn__icon--sound {
