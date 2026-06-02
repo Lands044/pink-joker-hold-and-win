@@ -1336,21 +1336,34 @@ function initBackgroundLightning() {
 		ctx.stroke();
 	}
 
-	// Build bolt from origin toward a target (center zone), with zigzag deviation
-	function makeBolt(ox, oy, tx, ty) {
+	// Build bolt from origin toward a target with persistent chaotic deviation
+	function makeBolt(ox, oy, tx, ty, chaos = 1) {
 		const pts = [{ x: ox, y: oy }];
-		const segments = 5 + Math.floor(Math.random() * 4);
+		const segments = 6 + Math.floor(Math.random() * 5);
+		// Perpendicular vector for sideways jitter
+		const dx = tx - ox;
+		const dy = ty - oy;
+		const len = Math.sqrt(dx * dx + dy * dy) || 1;
+		const px = -dy / len;
+		const py =  dx / len;
+
 		for (let i = 1; i <= segments; i++) {
 			const t = i / segments;
-			// Lerp toward target + perpendicular random offset that shrinks near end
-			const lx = ox + (tx - ox) * t;
-			const ly = oy + (ty - oy) * t;
-			const spread = (1 - t) * 80;
+			const lx = ox + dx * t;
+			const ly = oy + dy * t;
+			// Constant spread along the whole bolt, no shrinking near end
+			const jitter  = (Math.random() - 0.5) * 120 * chaos;
+			const jitter2 = (Math.random() - 0.5) * 40  * chaos;
 			pts.push({
-				x: lx + (Math.random() - 0.5) * spread,
-				y: ly + (Math.random() - 0.5) * spread * 0.5
+				x: lx + px * jitter  + (Math.random() - 0.5) * 20 * chaos,
+				y: ly + py * jitter  + jitter2
 			});
 		}
+		// Last point snaps close to target with small offset
+		pts.push({
+			x: tx + (Math.random() - 0.5) * 20 * chaos,
+			y: ty + (Math.random() - 0.5) * 20 * chaos
+		});
 		return pts;
 	}
 
@@ -1376,16 +1389,16 @@ function initBackgroundLightning() {
 			oy = h * 0.05 + Math.random() * h * 0.5;
 		}
 
-		const pts = makeBolt(ox, oy, tx, ty);
+		const pts = makeBolt(ox, oy, tx, ty, 1);
 
 		// Optional single branch from mid-point
 		let branch = null;
 		if (Math.random() > 0.5) {
 			const midIdx = Math.floor(pts.length * (0.3 + Math.random() * 0.3));
 			const mp = pts[midIdx];
-			const btx = mp.x + (Math.random() - 0.5) * 120;
-			const bty = mp.y + 60 + Math.random() * 100;
-			branch = makeBolt(mp.x, mp.y, btx, bty);
+			const btx = mp.x + (Math.random() - 0.5) * 140;
+			const bty = mp.y + 60 + Math.random() * 120;
+			branch = makeBolt(mp.x, mp.y, btx, bty, 0.7);
 		}
 
 		bolts.push({
