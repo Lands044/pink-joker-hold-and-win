@@ -1301,7 +1301,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 	initBackgroundLightning();
 
 	const config = await loadConfig();
-	mount(config);
+	// Помилка в конфігу не повинна блокувати панель нижче — через неї
+	// можна виправити значення або скинути локальні зміни.
+	try {
+		mount(config);
+	} catch (error) {
+		console.error('[game] не вдалося запустити гру з цим конфігом:', error);
+	}
 
 	// Правка public/config.json перемальовує лендинг на місці.
 	watchConfig(config, next => {

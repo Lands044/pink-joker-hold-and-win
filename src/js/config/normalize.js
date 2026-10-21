@@ -24,6 +24,12 @@ const setPath = (object, path, value) => {
 	keys.reduce((acc, key) => acc[key], object)[last] = value
 }
 
+const isPlainObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value)
+
+// Секція, що прийшла не обʼєктом (число/рядок/масив з чужого конфігу), інакше
+// mergeConfig просто підставив би її замість дефолтного обʼєкта.
+const objectOr = (value, fallback) => isPlainObject(value) ? value : structuredClone(fallback)
+
 const isIcon = (value) => Number.isInteger(value) && value >= 1 && value <= ICONS
 
 // Сітка 3×3: не видаляємо записи, лише доповнюємо/виправляємо клітинки.
@@ -43,6 +49,7 @@ function normalizeSpins(list, defaults) {
 	if (!Array.isArray(list) || list.length === 0) return structuredClone(defaults)
 	return list.map((spin, index) => {
 		const fallback = defaults[index] || defaults[defaults.length - 1]
+		if (!isPlainObject(spin)) spin = {}
 		const type = SPIN_TYPES.includes(spin?.type) ? spin.type : 'loss'
 		return {
 			...spin,
@@ -54,7 +61,23 @@ function normalizeSpins(list, defaults) {
 	})
 }
 
+// Джекпот можна задати і скорочено: "grand": "1200.00" (або числом).
+function normalizeJackpot(jackpot, fallback) {
+	if (!isPlainObject(jackpot)) {
+		return { label: fallback.label, value: jackpot == null ? fallback.value : String(jackpot) }
+	}
+	return {
+		...jackpot,
+		label: String(jackpot.label ?? fallback.label),
+		value: String(jackpot.value ?? fallback.value)
+	}
+}
+
 function normalizeGameConfig(input) {
+	for (const section of ['cta', 'texts', 'assets', 'game']) {
+		input[section] = objectOr(input[section], DEFAULT_CONFIG[section])
+	}
+
 	for (const path of OVERRIDDEN_PATHS) {
 		if (getPath(input, path) === getPath(CORE_DEFAULTS, path)) setPath(input, path, getPath(DEFAULT_CONFIG, path))
 	}
@@ -66,6 +89,9 @@ function normalizeGameConfig(input) {
 
 	const game = config.game
 	const defaults = DEFAULT_CONFIG.game
+	config.assets.sounds = objectOr(config.assets.sounds, DEFAULT_CONFIG.assets.sounds)
+	game.jackpots = objectOr(game.jackpots, defaults.jackpots)
+	game.spins = objectOr(game.spins, defaults.spins)
 
 	game.balance = Math.max(0, toNumber(game.balance, defaults.balance))
 
@@ -75,9 +101,7 @@ function normalizeGameConfig(input) {
 	game.bets = bets.length > 0 ? bets : [...defaults.bets]
 
 	for (const key of Object.keys(defaults.jackpots)) {
-		const jackpot = game.jackpots[key]
-		jackpot.label = String(jackpot.label ?? defaults.jackpots[key].label)
-		jackpot.value = String(jackpot.value ?? defaults.jackpots[key].value)
+		game.jackpots[key] = normalizeJackpot(game.jackpots[key], defaults.jackpots[key])
 	}
 
 	game.winAnimation = game.winAnimation === 'border' ? 'border' : 'line'

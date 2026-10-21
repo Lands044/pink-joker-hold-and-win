@@ -1,0 +1,220 @@
+{
+	"$comment": "Runtime config for this landing. This file is served as-is from the public folder and is fetched by the page on every load, so editing it changes the landing WITHOUT a rebuild. Reload the page (or let the dev watcher pick it up) and the landing re-renders.",
+	"version": 1,
+	"game": {
+		"$comment": "spins.desktop / spins.mobile: сценарій спінів по черзі (останній показує попап). type: loss | smallwin | bigwin. result — 3 колонки по 3 іконки (1–8 = src/assets/img/icon/icon-N.webp). winLine — рядок (0–2) виграшної іконки в кожній колонці або null. winAnimation: line | border.",
+		"balance": 5500,
+		"bets": [
+			"1",
+			"5",
+			"10",
+			"20",
+			"30",
+			"100"
+		],
+		"jackpots": {
+			"grand": {
+				"label": "GRAND",
+				"value": "1200.00"
+			},
+			"major": {
+				"label": "MAJOR",
+				"value": "1500.10"
+			},
+			"minor": {
+				"label": "MINOR",
+				"value": "555.00"
+			},
+			"mini": {
+				"label": "MINI",
+				"value": "251.00"
+			}
+		},
+		"winAnimation": "line",
+		"spins": {
+			"desktop": [
+				{
+					"type": "loss",
+					"winAmount": 0,
+					"winLine": null,
+					"result": [
+						[
+							2,
+							4,
+							1
+						],
+						[
+							3,
+							5,
+							2
+						],
+						[
+							1,
+							7,
+							4
+						]
+					]
+				},
+				{
+					"type": "smallwin",
+					"winAmount": 50,
+					"winLine": [
+						1,
+						1,
+						1
+					],
+					"result": [
+						[
+							4,
+							5,
+							2
+						],
+						[
+							3,
+							5,
+							6
+						],
+						[
+							8,
+							5,
+							1
+						]
+					]
+				},
+				{
+					"type": "bigwin",
+					"winAmount": 150,
+					"winLine": [
+						0,
+						1,
+						2
+					],
+					"result": [
+						[
+							1,
+							2,
+							4
+						],
+						[
+							5,
+							1,
+							3
+						],
+						[
+							6,
+							8,
+							1
+						]
+					]
+				}
+			],
+			"mobile": [
+				{
+					"type": "loss",
+					"winAmount": 0,
+					"winLine": null,
+					"result": [
+						[
+							4,
+							1,
+							7
+						],
+						[
+							5,
+							2,
+							8
+						],
+						[
+							7,
+							4,
+							3
+						]
+					]
+				},
+				{
+					"type": "smallwin",
+					"winAmount": 50,
+					"winLine": [
+						1,
+						1,
+						1
+					],
+					"result": [
+						[
+							4,
+							5,
+							2
+						],
+						[
+							3,
+							5,
+							6
+						],
+						[
+							8,
+							5,
+							1
+						]
+					]
+				},
+				{
+					"type": "bigwin",
+					"winAmount": 150,
+					"winLine": [
+						0,
+						1,
+						2
+					],
+					"result": [
+						[
+							1,
+							5,
+							4
+						],
+						[
+							2,
+							1,
+							3
+						],
+						[
+							6,
+							8,
+							1
+						]
+					]
+				}
+			]
+		}
+	},
+	"cta": {
+		"url": "#",
+		"target": "_self"
+	},
+	"texts": {
+		"popupTitle": "Congratulations!",
+		"popupText": "Ready to continue playing?",
+		"ctaButton": "Download Now",
+		"creditLabel": "CREDIT",
+		"lastWinLabel": "LAST WIN",
+		"betLabel": "BET"
+	},
+	"sound": {
+		"enabled": false,
+		"volume": 1
+	},
+	"assets": {
+		"$comment": "Values are either a built-in key (a filename under src/assets/img or src/assets/sound, no extension) or a URL. A URL starting with / , ./ , http:// or https:// is used verbatim, so you can drop custom art into the public folder and point at it here.",
+		"logo": "logo",
+		"background": "bg",
+		"sounds": {
+			"spin": "spin",
+			"win": "win"
+		}
+	},
+	"dev": {
+		"$comment": "watch polls this file and re-renders the landing in place when it changes. menu enables the config editor panel (in a production build it saves to this browser's localStorage only).",
+		"watch": true,
+		"watchInterval": 1500,
+		"menu": true
+	}
+}
